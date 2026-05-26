@@ -64,10 +64,11 @@ const Icon = {
 
 const Logo = () => (
   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <svg width="22" height="22" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="11" fill="#111" />
-      <path d="M8 7v10M8 12h8M16 7v10" stroke="#FF5A1F" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
+    <img
+      src="/logo.png"
+      alt="hellena"
+      style={{ width: 26, height: 26, borderRadius: "50%", objectFit: "cover", display: "block" }}
+    />
     <span style={{ fontFamily: '"Caveat", cursive', fontSize: 26, fontWeight: 600, letterSpacing: -0.5, color: "#111" }}>
       hellena
     </span>
@@ -76,10 +77,16 @@ const Logo = () => (
 
 const Header = ({ onHire, onNav }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setPastHero(y > window.innerHeight * 0.75);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -142,7 +149,16 @@ const Header = ({ onHire, onNav }) => {
           ))}
         </nav>
       )}
-      <Logo />
+      <div
+        style={{
+          opacity: pastHero ? 1 : 0,
+          transform: pastHero ? "translateY(0)" : "translateY(-6px)",
+          pointerEvents: pastHero ? "auto" : "none",
+          transition: "opacity .3s ease, transform .3s ease",
+        }}
+      >
+        <Logo />
+      </div>
       {menuOpen && isMobile && (
         <div
           style={{
@@ -858,18 +874,28 @@ const WorkRow = ({ work, index, total, open, onToggle }) => {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              width: 22,
-              height: 22,
+              width: 24,
+              height: 24,
               borderRadius: "50%",
-              background: open ? "#FF5A1F" : "rgba(255,255,255,.1)",
+              background: open ? "#FF5A1F" : "rgba(255,255,255,.12)",
               color: "#fff",
-              fontSize: 16,
-              lineHeight: 1,
-              transition: "all .25s",
-              transform: open ? "rotate(45deg)" : "rotate(0)",
+              transition: "background .25s",
             }}
           >
-            +
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <path
+                d="M6 2v8"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                style={{
+                  transformOrigin: "center",
+                  transform: open ? "scaleY(0)" : "scaleY(1)",
+                  transition: "transform .25s ease",
+                }}
+              />
+            </svg>
           </span>
         )}
       </div>
@@ -897,18 +923,28 @@ const WorkRow = ({ work, index, total, open, onToggle }) => {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              width: 22,
-              height: 22,
+              width: 24,
+              height: 24,
               borderRadius: "50%",
-              background: open ? "#FF5A1F" : "rgba(255,255,255,.1)",
+              background: open ? "#FF5A1F" : "rgba(255,255,255,.12)",
               color: "#fff",
-              fontSize: 16,
-              lineHeight: 1,
-              transition: "all .25s",
-              transform: open ? "rotate(45deg)" : "rotate(0)",
+              transition: "background .25s",
             }}
           >
-            +
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <path
+                d="M6 2v8"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                style={{
+                  transformOrigin: "center",
+                  transform: open ? "scaleY(0)" : "scaleY(1)",
+                  transition: "transform .25s ease",
+                }}
+              />
+            </svg>
           </span>
         </span>
       )}
@@ -1632,15 +1668,17 @@ const Loader = ({ visible }) => (
           position: "absolute",
           inset: 12,
           borderRadius: "50%",
-          background: "#111",
+          overflow: "hidden",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <svg width="34" height="34" viewBox="0 0 24 24">
-          <path d="M8 7v10M8 12h8M16 7v10" stroke="#FF5A1F" strokeWidth="2.4" strokeLinecap="round" fill="none" />
-        </svg>
+        <img
+          src="/logo.png"
+          alt="hellena"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
       </div>
     </div>
     <div style={{ textAlign: "center" }}>
