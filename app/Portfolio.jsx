@@ -1238,77 +1238,210 @@ const Gallery = () => {
   );
 };
 
+// Scalloped (wavy edge) circular badge — used for "Baixar Currículo"
+const scallopedClip = (() => {
+  // Generate a 16-bump scalloped circle as polygon points
+  const bumps = 16;
+  const outer = 50;
+  const inner = 46;
+  const pts = [];
+  for (let i = 0; i < bumps * 2; i++) {
+    const r = i % 2 === 0 ? outer : inner;
+    const a = (i / (bumps * 2)) * Math.PI * 2 - Math.PI / 2;
+    pts.push(`${50 + r * Math.cos(a)}% ${50 + r * Math.sin(a)}%`);
+  }
+  return `polygon(${pts.join(", ")})`;
+})();
+
+const Stat = ({ value, label, align = "left", stars = false, isMobile }) => (
+  <div style={{ textAlign: isMobile ? "center" : align }}>
+    {stars && (
+      <div style={{ marginBottom: 6, color: "#111", letterSpacing: 3, fontSize: 12 }}>★★★★★</div>
+    )}
+    <div
+      style={{
+        fontSize: isMobile ? "clamp(54px, 16vw, 80px)" : "clamp(72px, 7vw, 112px)",
+        fontWeight: 800,
+        letterSpacing: "-0.05em",
+        lineHeight: 1,
+        color: "#111",
+      }}
+    >
+      {value}
+    </div>
+    <div style={{ marginTop: 10, fontSize: isMobile ? 13 : 15, color: "#333" }}>{label}</div>
+  </div>
+);
+
 const About = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
-  <section style={{ padding: isMobile ? "10px 16px 40px" : "20px 28px 60px" }}>
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr",
-        gap: isMobile ? 24 : 30,
-        background: "#fff",
-        borderRadius: 22,
-        padding: isMobile ? 24 : 40,
-      }}
-    >
-      <div>
-        <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12, fontWeight: 600, color: "#FF5A1F" }}>SOBRE</span>
-        <h3
+    <section id="about" style={{ padding: isMobile ? "30px 16px 40px" : "60px 28px 80px" }}>
+      {/* SOBRE MIM pill */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: isMobile ? 22 : 28 }}>
+        <span
           style={{
-            margin: "8px 0 18px",
-            fontSize: "clamp(28px, 3.6vw, 42px)",
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.05,
+            background: "#fff",
+            color: "#111",
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: 2,
+            padding: "8px 18px",
+            borderRadius: 999,
+            boxShadow: "0 1px 0 rgba(0,0,0,.04)",
           }}
         >
-          Comunicativa, proativa e<br />
-          atenta aos detalhes.
-        </h3>
-        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#444", maxWidth: 520 }}>
-          Estudante de Psicologia (FICR) e Museologia (UFPE). Atualmente designer e social media na DigitalNest,
-          atuando com marketing digital, criação de conteúdo e identidade para redes. Trabalho também com edição
-          de vídeo, foto e uso de IA aplicada ao design. Acredito que bom design escuta antes de falar.
-        </p>
+          SOBRE MIM
+        </span>
       </div>
-      <div
+
+      {/* Headline */}
+      <h2
         style={{
-          borderLeft: isMobile ? "none" : "1px solid #eee",
-          borderTop: isMobile ? "1px solid #eee" : "none",
-          paddingLeft: isMobile ? 0 : 30,
-          paddingTop: isMobile ? 20 : 0,
-          display: "flex",
-          flexDirection: "column",
-          gap: 18,
+          margin: "0 auto",
+          maxWidth: 920,
+          textAlign: "center",
+          fontSize: isMobile ? "clamp(24px, 7vw, 32px)" : "clamp(32px, 3.6vw, 50px)",
+          fontWeight: 800,
+          letterSpacing: "-0.025em",
+          lineHeight: 1.15,
+          color: "#111",
+          textTransform: "uppercase",
         }}
       >
-        {[
-          { k: "Formação", v: "Psicologia (FICR, 2026)\nMuseologia (UFPE, 2025–26)" },
-          { k: "Atuação", v: "DigitalNest — Designer & Social Media\nMarketing digital · Criação de conteúdo" },
-          { k: "Habilidades", v: "IA aplicada ao design · Edição de vídeo & foto\nCopy assistida por IA · Automação criativa" },
-          { k: "Ferramentas", v: "Canva · Suite Adobe · CapCut · Premiere\nMidjourney · ChatGPT · Figma" },
-          { k: "Base", v: "Recife / PE — Brasil" },
-          { k: "Idiomas", v: "Português · Inglês (intermediário)" },
-        ].map(({ k, v }) => (
-          <div key={k} style={{ display: "grid", gridTemplateColumns: isMobile ? "90px 1fr" : "120px 1fr", gap: isMobile ? 10 : 16 }}>
-            <span
+        Designer criando identidades visuais com sensibilidade, escuta &amp;
+        <span style={{ color: "#FF5A1F" }}> propósito.</span>
+      </h2>
+
+      {/* Stats grid with center portrait */}
+      <div
+        style={{
+          position: "relative",
+          marginTop: isMobile ? 36 : 70,
+          maxWidth: 1180,
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        {/* Continuous horizontal divider line behind everything */}
+        {!isMobile && (
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: "50%",
+              height: 1,
+              background: "#111",
+              zIndex: 0,
+            }}
+          />
+        )}
+
+        <div
+          style={{
+            position: "relative",
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr auto 1fr",
+            gridTemplateRows: isMobile ? "auto auto auto" : "auto auto",
+            gap: isMobile ? "32px 24px" : "60px 40px",
+            alignItems: "center",
+            justifyItems: isMobile ? "center" : "stretch",
+            zIndex: 1,
+          }}
+        >
+          {/* Top-left stat */}
+          <div style={{ gridColumn: isMobile ? "1" : "1", gridRow: "1" }}>
+            <Stat value="03+" label="Anos de atuação" align="left" isMobile={isMobile} />
+          </div>
+
+          {/* Top-right stat */}
+          <div style={{ gridColumn: isMobile ? "2" : "3", gridRow: "1" }}>
+            <Stat value="04" label="Áreas de atuação" align="right" stars isMobile={isMobile} />
+          </div>
+
+          {/* Center portrait — spans both rows on desktop */}
+          <div
+            style={{
+              gridColumn: isMobile ? "1 / span 2" : "2",
+              gridRow: isMobile ? "2" : "1 / span 2",
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div
               style={{
-                fontFamily: '"JetBrains Mono", monospace',
-                fontSize: 11,
-                color: "#999",
-                textTransform: "uppercase",
-                paddingTop: 2,
+                position: "relative",
+                width: isMobile ? "min(260px, 70vw)" : 340,
+                aspectRatio: "1",
+                borderRadius: "50%",
+                overflow: "hidden",
+                background: "#FF5A1F",
+                boxShadow: "0 20px 50px rgba(0,0,0,.15)",
               }}
             >
-              {k}
-            </span>
-            <span style={{ fontSize: 14, color: "#222", lineHeight: 1.5, whiteSpace: "pre-line" }}>{v}</span>
+              <img
+                src="/about.png"
+                alt="Hellena"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+            </div>
+
+            {/* Scalloped CV badge — overlaps bottom of portrait */}
+            <a
+              href="/curriculo-hellena.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                position: "relative",
+                marginTop: isMobile ? -28 : -36,
+                width: isMobile ? 110 : 130,
+                height: isMobile ? 110 : 130,
+                background: "#fff",
+                color: "#111",
+                textDecoration: "none",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 4,
+                fontSize: isMobile ? 10 : 11,
+                fontWeight: 700,
+                letterSpacing: 1.5,
+                textAlign: "center",
+                lineHeight: 1.15,
+                clipPath: scallopedClip,
+                WebkitClipPath: scallopedClip,
+                filter: "drop-shadow(0 10px 24px rgba(0,0,0,.12))",
+                transition: "transform .25s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "rotate(-8deg) scale(1.05)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
+            >
+              <span>
+                BAIXAR
+                <br />
+                CURRÍCULO
+              </span>
+              <span style={{ fontSize: 16 }}>↓</span>
+            </a>
           </div>
-        ))}
+
+          {/* Bottom-left stat */}
+          <div style={{ gridColumn: isMobile ? "1" : "1", gridRow: isMobile ? "3" : "2" }}>
+            <Stat value="50+" label="Projetos entregues" align="left" isMobile={isMobile} />
+          </div>
+
+          {/* Bottom-right stat */}
+          <div style={{ gridColumn: isMobile ? "2" : "3", gridRow: isMobile ? "3" : "2" }}>
+            <Stat value="02" label="Formações em curso" align="right" isMobile={isMobile} />
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
   );
 };
 
@@ -1752,9 +1885,9 @@ export default function Portfolio() {
       <Header onHire={() => setModal(true)} onNav={onNav} />
       <Hero />
       <Services />
+      <About />
       <Works />
       <Gallery />
-      <About />
       <Footer onHire={() => setModal(true)} />
       <HireModal open={modal} onClose={() => setModal(false)} />
     </div>
