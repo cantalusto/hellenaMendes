@@ -3,10 +3,11 @@
 import { useEffect, useRef } from "react";
 
 // The CSS sculpture stays visible until WebGL renders, and when it is unavailable.
-export default function Orbit() {
+export default function Orbit({ active = true }) {
   const host = useRef(null);
 
   useEffect(() => {
+    if (!active) return;
     const element = host.current;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let disposed = false;
@@ -132,7 +133,7 @@ export default function Orbit() {
       disposed = true;
       cleanup();
     };
-  }, []);
+  }, [active]);
 
   return (
     <div className="orbit" ref={host} aria-hidden="true">

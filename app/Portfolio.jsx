@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Hero from "./Hero";
+import Entrance from "./Entrance";
 import { SERVICES, WORKS } from "./content";
 import { artworkImages } from "./artwork-images";
 import aboutPortrait from "../public/hellena-about-studio-v1.webp";
@@ -127,8 +128,9 @@ function Star({ className = "" }) {
   );
 }
 
-function useMotion(root) {
+function useMotion(root, active) {
   useEffect(() => {
+    if (!active) return;
     let disposed = false;
     let media;
     Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
@@ -241,7 +243,7 @@ function useMotion(root) {
       disposed = true;
       media?.revert();
     };
-  }, [root]);
+  }, [root, active]);
 }
 
 function Header({ onContact }) {
@@ -685,7 +687,7 @@ function Gallery({ onView }) {
   );
 }
 
-function Footer({ onContact }) {
+function Footer({ onContact, onReplay }) {
   return (
     <footer className="footer section-wrap" id="contact">
       <SectionLabel number="05">O PRÓXIMO PROJETO PODE SER O SEU</SectionLabel>
@@ -732,7 +734,7 @@ function Footer({ onContact }) {
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Hellena Mendes</span>
         <span>FEITO COM INTENÇÃO & SENSIBILIDADE</span>
-        <a href="#top">Voltar ao topo ↑</a>
+        <button onClick={onReplay}>Rever abertura ↗</button>
       </div>
     </footer>
   );
@@ -988,7 +990,10 @@ export default function Portfolio() {
   const root = useRef(null);
   const [contact, setContact] = useState(false);
   const [view, setView] = useState(null);
-  useMotion(root);
+  const [entered, setEntered] = useState(false);
+  const [entranceVersion, setEntranceVersion] = useState(0);
+  const onEnter = useCallback(() => setEntered(true), []);
+  useMotion(root, entered);
   const onView = (images, title, index = 0) =>
     setView({ images, title, index });
   return (
@@ -998,15 +1003,26 @@ export default function Portfolio() {
       </a>
       <Header onContact={() => setContact(true)} />
       <main id="main-content">
-        <Hero onContact={() => setContact(true)} />
+        <Hero onContact={() => setContact(true)} motionActive={entered} />
         <Marquee />
         <Projects onView={onView} />
         <About />
         <Services onContact={() => setContact(true)} />
         <Gallery onView={onView} />
       </main>
-      <Footer onContact={() => setContact(true)} />
+      <Footer
+        onContact={() => setContact(true)}
+        onReplay={() => {
+          setEntered(false);
+          setEntranceVersion((version) => version + 1);
+        }}
+      />
       <ContactModal open={contact} onClose={() => setContact(false)} />
+      <Entrance
+        key={entranceVersion}
+        onEnter={onEnter}
+        replay={entranceVersion > 0}
+      />
       {view && <Lightbox view={view} onClose={() => setView(null)} />}
     </div>
   );

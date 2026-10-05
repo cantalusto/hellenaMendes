@@ -6,7 +6,7 @@ import portrait from "../public/hellena-portrait-v3.webp";
 
 const Orbit = dynamic(() => import("./Orbit"), { ssr: false });
 
-export default function Hero({ onContact }) {
+export default function Hero({ onContact, motionActive = true }) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-stage">
@@ -48,7 +48,7 @@ export default function Hero({ onContact }) {
             Psicologia
           </span>
           <div className="hero-orbit">
-            <Orbit />
+            <Orbit active={motionActive} />
           </div>
         </div>
         <div className="hero-bottom-content">

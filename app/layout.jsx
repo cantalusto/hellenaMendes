@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./hero.css";
+import "./entrance.css";
 
 export const metadata = {
   title: "Hellena Mendes — Design que faz sentir",
