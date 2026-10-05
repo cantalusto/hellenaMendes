@@ -1,0 +1,559 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-inline: clamp(20px, 2vw, 40px);
+}
+.hero-stage {
+  position: relative;
+  height: clamp(660px, calc(100svh - 64px), 1080px);
+}
+.hero-art-stage {
+  position: absolute;
+  inset: 0;
+}
+.hero-monument {
+  position: absolute;
+  top: 11%;
+  left: -1.5%;
+  width: 103%;
+  text-align: center;
+  font-family: "Manrope", Arial, sans-serif;
+  font-size: clamp(160px, 21.5vw, 560px);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: -0.075em;
+  color: #f9fafb;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 7%,
+    #000 93%,
+    transparent
+  );
+}
+.hero-visual {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  width: min(52vw, 820px);
+  height: 91%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.hero-visual-inner {
+  position: absolute;
+  inset: 0;
+}
+.portrait-halo {
+  position: absolute;
+  top: 7%;
+  left: 4%;
+  width: 92%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 60% 35%,
+    #ff9e58,
+    #ff6232 49%,
+    #f34023 85%
+  );
+}
+.hero-portrait {
+  position: absolute;
+  top: -3%;
+  left: 50%;
+  width: auto;
+  max-width: none;
+  height: 109%;
+  transform: translateX(-50%);
+  mask-image:
+    radial-gradient(ellipse 55% 75% at 50% 25%, #000 60%, transparent 90%),
+    linear-gradient(to bottom, #000 67%, #0009 81%, transparent 98%);
+  mask-composite: intersect;
+}
+.hero-signature {
+  position: absolute;
+  top: 38%;
+  font-family: "Caveat", cursive;
+  font-size: clamp(80px, 11vw, 210px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #ff5a1f;
+  z-index: 4;
+  text-shadow: 0 2px 6px #191b1a14;
+  pointer-events: none;
+}
+.signature-first {
+  left: 1%;
+  transform: rotate(-5deg);
+}
+.signature-last {
+  right: 0.5%;
+  transform: rotate(4deg);
+}
+.floating-label {
+  position: absolute;
+  z-index: 5;
+  padding: 8px 16px;
+  background: #111;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 5px 16px #0002;
+}
+.label-brand {
+  left: 25%;
+  top: 29%;
+  transform: rotate(-7deg);
+}
+.label-human {
+  right: 24%;
+  top: 20%;
+  transform: rotate(8deg);
+}
+.hero-orbit {
+  position: absolute;
+  right: 13%;
+  top: 5%;
+  width: clamp(110px, 8vw, 165px);
+  height: clamp(110px, 8vw, 165px);
+  z-index: 3;
+}
+.hero-bottom-content {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  align-items: end;
+  z-index: 6;
+}
+.hero-greeting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin-bottom: 17px;
+}
+.hero-greeting > span {
+  font-size: 15px;
+  transform: rotate(-12deg);
+}
+.hero h1 {
+  font-size: clamp(40px, 5.4vw, 88px);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+  margin: 0;
+  white-space: nowrap;
+}
+.hero-title-last {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.hero-title-dot {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ff5a1f;
+  flex-shrink: 0;
+}
+.hero-contact-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 23px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 3px;
+  box-shadow: 0 8px 25px #191b1a04;
+}
+.hero-contact-card > div {
+  flex: 1;
+  min-width: 0;
+}
+.hero-contact-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #24251f;
+}
+.hero-email {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #c83610;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  overflow-wrap: anywhere;
+}
+.hero-work-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  min-height: 30px;
+  margin-top: 5px;
+  font-size: 11px;
+}
+.hero-contact-seal {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: transform 0.3s;
+}
+.hero-mobile-signature,
+.hero-mobile-cta {
+  display: none;
+}
+.hero-contact-seal:hover {
+  transform: scale(1.08);
+}
+.seal-text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: seal-spin 20s linear infinite;
+}
+.seal-text text {
+  fill: currentColor;
+  font-size: 10px;
+  letter-spacing: 1.65px;
+  font-weight: 600;
+}
+.seal-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ff5a1f;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+}
+@keyframes seal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  height: 64px;
+  padding-inline: clamp(20px, 2vw, 40px);
+}
+.header > .wordmark {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.25s;
+}
+.header.at-top > .wordmark {
+  visibility: hidden;
+  opacity: 0;
+}
+.header.at-top {
+  background: var(--paper);
+  border-bottom-color: transparent;
+}
+.navigation {
+  gap: 25px;
+}
+.navigation a {
+  font-size: 12px;
+}
+.nav-number {
+  display: none;
+}
+.header-cta {
+  min-height: 38px;
+  font-size: 12px;
+  padding: 9px 20px;
+}
+.header-socials {
+  display: flex;
+  gap: 8px;
+}
+.header-socials a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+}
+.header-socials svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (min-width: 2000px) {
+  .hero-monument {
+    font-size: 21.5vw;
+  }
+  .hero-visual {
+    width: 42vw;
+    max-width: 960px;
+  }
+}
+@media (min-width: 761px) and (max-width: 1000px) {
+  .hero-stage {
+    height: 720px;
+  }
+  .hero-visual {
+    width: 65vw;
+  }
+  .hero-monument {
+    top: 12%;
+  }
+  .hero-signature {
+    top: 44%;
+    font-size: 11vw;
+  }
+  .hero-bottom-content {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 20px;
+  }
+  .hero h1 {
+    font-size: 5.2vw;
+  }
+  .hero-contact-card {
+    padding: 18px;
+    gap: 12px;
+  }
+  .hero-contact-card p {
+    font-size: 12px;
+  }
+  .hero-contact-seal {
+    width: 60px;
+    height: 60px;
+  }
+  .header-socials {
+    display: none;
+  }
+  .header > .wordmark {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .header {
+    height: 64px;
+  }
+  .header > .wordmark {
+    position: static;
+    transform: none;
+  }
+  .header.at-top > .wordmark {
+    visibility: visible;
+    opacity: 1;
+  }
+  .header-cta {
+    font-size: 11px;
+    padding: 10px 16px;
+    min-height: 42px;
+  }
+  .header-socials {
+    display: none;
+  }
+  .navigation .nav-number {
+    display: inline;
+  }
+  .navigation a {
+    font-size: 24px;
+  }
+  .hero-stage {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-art-stage {
+    position: relative;
+    height: clamp(300px, 85vw, 420px);
+    margin-top: 22px;
+  }
+  .hero-monument {
+    top: 24px;
+    left: -1%;
+    width: 102%;
+    font-size: clamp(58px, 19vw, 110px);
+    letter-spacing: -0.085em;
+  }
+  .hero-visual {
+    width: 72%;
+    max-width: 290px;
+    height: 86%;
+    top: 0;
+  }
+  .portrait-halo {
+    top: 7%;
+    width: 92%;
+    left: 4%;
+  }
+  .hero-portrait {
+    top: -3%;
+    height: 103%;
+  }
+  .hero-signature {
+    display: none;
+  }
+  .hero-mobile-signature {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: "Caveat", cursive;
+    font-size: clamp(42px, 12vw, 60px);
+    line-height: 1.1;
+    color: #ff5a1f;
+    font-weight: 600;
+    z-index: 4;
+  }
+  .signature-first {
+    left: -1%;
+    transform: rotate(-7deg);
+  }
+  .signature-last {
+    right: -1%;
+    transform: rotate(5deg);
+  }
+  .floating-label {
+    font-size: 10px;
+    padding: 7px 12px;
+  }
+  .label-brand {
+    top: 45%;
+    left: 3%;
+  }
+  .label-human {
+    top: 26%;
+    right: 2%;
+  }
+  .hero-orbit {
+    top: auto;
+    bottom: 54px;
+    right: auto;
+    left: 4%;
+    width: 70px;
+    height: 70px;
+  }
+  .hero-bottom-content {
+    display: contents;
+  }
+  .hero-intro {
+    order: -1;
+    padding-top: 24px;
+  }
+  .hero-greeting {
+    font-size: 12px;
+    margin-bottom: 13px;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 9.6vw, 58px);
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+  .hero-title-last {
+    gap: 10px;
+  }
+  .hero-title-dot {
+    width: 11px;
+    height: 11px;
+  }
+  .hero-contact-card {
+    display: block;
+    order: 2;
+    background: transparent;
+    border-radius: 0;
+    padding: 0 0 32px;
+    margin: 20px 0 0;
+    box-shadow: none;
+  }
+  .hero-contact-card > div {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 18px 14px;
+    align-items: center;
+  }
+  .hero-contact-card p {
+    grid-column: 1 / -1;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .hero-email {
+    display: none;
+  }
+  .hero-work-link {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+    font-size: 12px;
+    min-height: 44px;
+    justify-self: center;
+  }
+  .hero-mobile-cta {
+    display: inline-flex;
+    grid-column: 1;
+    grid-row: 2;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 12px 14px;
+    border-radius: 50px;
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+  }
+  .hero-contact-seal {
+    display: none;
+  }
+  .seal-arrow {
+    width: 26px;
+    height: 26px;
+    font-size: 17px;
+  }
+}
+@media (max-width: 380px) {
+  .hero-art-stage {
+    height: 290px;
+  }
+  .hero-contact-card {
+    padding: 0 0 28px;
+  }
+  .hero-contact-seal {
+    width: 46px;
+    height: 46px;
+  }
+  .hero-email {
+    font-size: 10px;
+  }
+  .hero h1 {
+    font-size: 9.6vw;
+  }
+  .hero-mobile-cta {
+    font-size: 11px;
+    padding-inline: 12px;
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seal-text {
+    animation: none;
+  }
+}

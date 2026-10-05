@@ -4,3 +4,7 @@ out
 .DS_Store
 .env*.local
 _design
+# Local package cache and review artifacts
+.npm-cache/
+asset-contact-sheet.jpg
+.next-verify/
