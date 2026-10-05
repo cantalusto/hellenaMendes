@@ -14,7 +14,7 @@ const WHATSAPP = "https://wa.me/5581996407124";
 const SOCIAL = [
   {
     name: "Instagram",
-    href: "https://www.instagram.com/psique.hellenamendes/",
+    href: "https://www.instagram.com/hellenamendes.psique/",
   },
   {
     name: "LinkedIn",
