@@ -15,7 +15,7 @@
 }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: calc(100px + env(safe-area-inset-top, 0px));
 }
 body {
   margin: 0;
@@ -35,6 +35,8 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 button {
+  -webkit-appearance: none;
+  appearance: none;
   cursor: pointer;
   color: inherit;
   border: 0;
@@ -70,7 +72,8 @@ h3 {
   color: var(--paper);
 }
 .section-wrap {
-  padding-inline: var(--gutter);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
 .serif {
   font-family: "Instrument Serif", Georgia, serif;
@@ -151,16 +154,19 @@ h3 {
   transform: none;
 }
 .header {
-  height: 88px;
+  height: calc(88px + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: var(--gutter);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   position: sticky;
   top: 0;
   z-index: 50;
   background: rgba(214, 217, 222, 0.94);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--line);
 }
 .wordmark {
@@ -172,10 +178,9 @@ h3 {
   align-items: flex-start;
   gap: 4px;
 }
-.wordmark > span {
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0;
+.wordmark-star {
+  width: 14px;
+  height: 14px;
   margin-top: 6px;
 }
 .navigation {
@@ -479,10 +484,11 @@ h2 .serif {
   font-style: italic;
   transform: rotate(-10deg);
 }
-.photo-annotation span {
+.photo-annotation svg {
   display: inline-block;
-  font-family: Arial, sans-serif;
-  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
 }
 .about-star {
   width: 90px;
@@ -573,9 +579,15 @@ summary::-webkit-details-marker {
   font-size: 22px;
   font-weight: 400;
   flex-shrink: 0;
-  transition: transform 0.25s;
 }
-details[open] > summary .detail-plus {
+.detail-plus svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s;
+  transform-origin: center;
+}
+details[open] > summary .detail-plus svg {
   transform: rotate(45deg);
 }
 .experience-detail {
@@ -861,6 +873,7 @@ details[open] > summary .detail-plus {
   border-top: 1px solid #b3371b;
 }
 .footer-bottom > button {
+  gap: 8px;
   min-height: 44px;
   display: flex;
   align-items: center;
@@ -868,13 +881,23 @@ details[open] > summary .detail-plus {
   background: transparent;
   font-size: inherit;
 }
+.footer-bottom > button svg {
+  width: 16px;
+  height: 16px;
+}
 .modal {
   border: 0;
   background: var(--paper);
   color: var(--ink);
   padding: 0;
-  max-height: calc(100dvh - 32px);
-  max-width: calc(100vw - 32px);
+  max-height: calc(
+    100dvh - 32px - env(safe-area-inset-top, 0px) -
+      env(safe-area-inset-bottom, 0px)
+  );
+  max-width: calc(
+    100vw - 32px - env(safe-area-inset-left, 0px) -
+      env(safe-area-inset-right, 0px)
+  );
   width: 560px;
   border-radius: 8px;
   overflow-y: auto;
@@ -1047,17 +1070,17 @@ textarea {
 }
 @media (max-width: 760px) {
   html {
-    scroll-padding-top: 82px;
+    scroll-padding-top: calc(82px + env(safe-area-inset-top, 0px));
   }
   .header {
-    height: 72px;
+    height: calc(72px + env(safe-area-inset-top, 0px));
   }
   .wordmark {
     font-size: 27px;
   }
   .header-cta {
     padding: 10px 16px;
-    min-height: 42px;
+    min-height: 44px;
     font-size: 10px;
     gap: 12px;
   }
@@ -1091,6 +1114,8 @@ textarea {
     right: 0;
     top: 100%;
     padding: 18px var(--gutter) 25px;
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
     background: var(--paper);
     box-shadow: 0 15px 25px #24251f15;
   }

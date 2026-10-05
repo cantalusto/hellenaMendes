@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Hero from "./Hero";
 import Entrance from "./Entrance";
+import { Arrow, Star, Close, Plus } from "./Icons";
 import { SERVICES, WORKS } from "./content";
 import { artworkImages } from "./artwork-images";
 import aboutPortrait from "../public/hellena-about-studio-v1.webp";
@@ -100,33 +101,6 @@ const ARTWORKS = [
   },
 ];
 const artSrc = (id) => artworkImages[id];
-
-function Arrow({ direction = "up" }) {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      style={direction === "down" ? { transform: "rotate(135deg)" } : undefined}
-    >
-      <path d="M5 19 19 5M5 5h14v14" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
-function Star({ className = "" }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 100 100"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="m50 0 8 31 27-16-16 27 31 8-31 8 16 27-27-16-8 31-8-31-27 16 16-27L0 50l31-8-16-27 27 16Z" />
-    </svg>
-  );
-}
 
 function useMotion(root, active) {
   useEffect(() => {
@@ -303,7 +277,8 @@ function Header({ onContact }) {
   return (
     <header className={`header ${!active || active === "top" ? "at-top" : ""}`}>
       <a href="#top" className="wordmark" aria-label="Hellena Mendes — início">
-        hellena<span>✳</span>
+        hellena
+        <Star className="wordmark-star" />
       </a>
       <nav
         id="main-navigation"
@@ -496,7 +471,7 @@ function About() {
             alt="Retrato de Hellena Mendes"
           />
           <span className="photo-annotation">
-            prazer, Hellena! <span>↗</span>
+            prazer, Hellena! <Arrow />
           </span>
           <Star className="about-star" />
         </div>
@@ -534,7 +509,7 @@ function About() {
             className="button button-outline"
             download="Curriculo-Hellena-Mendes.pdf"
           >
-            Baixar currículo <span aria-hidden="true">↓</span>
+            Baixar currículo <Arrow direction="down" />
           </a>
         </div>
       </div>
@@ -546,7 +521,9 @@ function About() {
               <summary>
                 <span>{work.title}</span>
                 <span className="experience-year">{work.year}</span>
-                <span className="detail-plus">+</span>
+                <span className="detail-plus">
+                  <Plus />
+                </span>
               </summary>
               <div className="experience-detail">
                 <p>{work.description}</p>
@@ -601,7 +578,9 @@ function Services({ onContact }) {
               <summary>
                 <span className="tiny-index">0{index + 1}</span>
                 <h3>{service.title}</h3>
-                <span className="detail-plus">+</span>
+                <span className="detail-plus">
+                  <Plus />
+                </span>
               </summary>
               <div className="service-detail">
                 <p>{service.text}</p>
@@ -715,7 +694,8 @@ function Footer({ onContact, onReplay }) {
       </div>
       <div className="footer-meta">
         <a className="wordmark" href="#top">
-          hellena<span>✳</span>
+          hellena
+          <Star className="wordmark-star" />
         </a>
         <span>DE RECIFE, PARA QUALQUER LUGAR.</span>
         <div>
@@ -734,7 +714,9 @@ function Footer({ onContact, onReplay }) {
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Hellena Mendes</span>
         <span>FEITO COM INTENÇÃO & SENSIBILIDADE</span>
-        <button onClick={onReplay}>Rever abertura ↗</button>
+        <button onClick={onReplay}>
+          Rever abertura <Arrow />
+        </button>
       </div>
     </footer>
   );
@@ -813,7 +795,7 @@ function Lightbox({ view, onClose }) {
             aria-label="Fechar galeria"
             autoFocus
           >
-            ×
+            <Close />
           </button>
         </div>
         <div className="lightbox-image">
@@ -831,7 +813,7 @@ function Lightbox({ view, onClose }) {
             onClick={() => change(-1)}
             aria-label="Peça anterior"
           >
-            ←
+            <Arrow direction="left" />
           </button>
           <span aria-live="polite">
             {String(index + 1).padStart(2, "0")} /{" "}
@@ -842,7 +824,7 @@ function Lightbox({ view, onClose }) {
             onClick={() => change(1)}
             aria-label="Próxima peça"
           >
-            →
+            <Arrow direction="right" />
           </button>
         </div>
       </div>
@@ -876,7 +858,7 @@ function ContactModal({ open, onClose }) {
           onClick={onClose}
           aria-label="Fechar contato"
         >
-          ×
+          <Close />
         </button>
         <span className="tiny-index accent">
           VAMOS TIRAR SUA IDEIA DO PAPEL
@@ -993,6 +975,21 @@ export default function Portfolio() {
   const [entered, setEntered] = useState(false);
   const [entranceVersion, setEntranceVersion] = useState(0);
   const onEnter = useCallback(() => setEntered(true), []);
+  const replayEntrance = useCallback(() => {
+    setContact(false);
+    setView(null);
+    setEntered(false);
+    setEntranceVersion((version) => version + 1);
+  }, []);
+  useEffect(() => {
+    const onRefreshShortcut = (event) => {
+      if (entered && event.ctrlKey && event.key === "F5" && !event.repeat) {
+        replayEntrance();
+      }
+    };
+    window.addEventListener("keydown", onRefreshShortcut);
+    return () => window.removeEventListener("keydown", onRefreshShortcut);
+  }, [entered, replayEntrance]);
   useMotion(root, entered);
   const onView = (images, title, index = 0) =>
     setView({ images, title, index });
@@ -1010,13 +1007,7 @@ export default function Portfolio() {
         <Services onContact={() => setContact(true)} />
         <Gallery onView={onView} />
       </main>
-      <Footer
-        onContact={() => setContact(true)}
-        onReplay={() => {
-          setEntered(false);
-          setEntranceVersion((version) => version + 1);
-        }}
-      />
+      <Footer onContact={() => setContact(true)} onReplay={replayEntrance} />
       <ContactModal open={contact} onClose={() => setContact(false)} />
       <Entrance
         key={entranceVersion}

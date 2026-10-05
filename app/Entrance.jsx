@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { Arrow, Star, Close } from "./Icons";
 
 const Perception = dynamic(() => import("./Perception"), { ssr: false });
 const SESSION_KEY = "hellena-experience-entered-v1";
@@ -14,11 +15,14 @@ export default function Entrance({ onEnter, replay = false }) {
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
+    // Browser refreshes (including Ctrl+F5) replay the entrance.
+    const navigation = performance.getEntriesByType("navigation")[0];
+    const refreshed = navigation?.type === "reload";
     let entered = false;
     try {
       entered = sessionStorage.getItem(SESSION_KEY) === "true";
     } catch {}
-    if (entered && !replay) {
+    if (entered && !replay && !refreshed) {
       onEnter();
       return;
     }
@@ -73,10 +77,11 @@ export default function Entrance({ onEnter, replay = false }) {
       <div className="entrance-layout">
         <header className="entrance-header">
           <span className="entrance-wordmark">
-            hellena<span aria-hidden="true">✳</span>
+            hellena
+            <Star />
           </span>
           <span className="entrance-discipline">
-            DESIGN <span aria-hidden="true">×</span> PSICOLOGIA
+            DESIGN <Close /> PSICOLOGIA
           </span>
         </header>
         <div className="entrance-stage">
@@ -118,7 +123,7 @@ export default function Entrance({ onEnter, replay = false }) {
               <rect x="5" y="10" width="14" height="11" rx="3" />
               <path d="M12 14v3" />
             </svg>
-            Desbloquear a experiência <span aria-hidden="true">↗</span>
+            Desbloquear a experiência <Arrow />
           </button>
           <span className="entrance-invitation">
             POR HELLENA MENDES

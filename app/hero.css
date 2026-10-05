@@ -2,7 +2,8 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-inline: clamp(20px, 2vw, 40px);
+  padding-left: max(clamp(20px, 2vw, 40px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 2vw, 40px), env(safe-area-inset-right, 0px));
 }
 .hero-stage {
   position: relative;
@@ -143,8 +144,10 @@
   font-size: 13px;
   margin-bottom: 17px;
 }
-.hero-greeting > span {
-  font-size: 15px;
+.hero-greeting > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--orange);
   transform: rotate(-12deg);
 }
 .hero h1 {
@@ -205,6 +208,15 @@
   margin-top: 5px;
   font-size: 11px;
 }
+.hero-work-link svg,
+.hero-mobile-cta svg {
+  width: 16px;
+  height: 16px;
+}
+.seal-arrow svg {
+  width: 18px;
+  height: 18px;
+}
 .hero-contact-seal {
   width: 80px;
   height: 80px;
@@ -253,8 +265,9 @@
 }
 
 .header {
-  height: 64px;
-  padding-inline: clamp(20px, 2vw, 40px);
+  height: calc(64px + env(safe-area-inset-top, 0px));
+  padding-left: max(clamp(20px, 2vw, 40px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 2vw, 40px), env(safe-area-inset-right, 0px));
 }
 .header > .wordmark {
   position: absolute;
@@ -351,7 +364,7 @@
 }
 @media (max-width: 760px) {
   .header {
-    height: 64px;
+    height: calc(64px + env(safe-area-inset-top, 0px));
   }
   .header > .wordmark {
     position: static;
@@ -364,7 +377,7 @@
   .header-cta {
     font-size: 11px;
     padding: 10px 16px;
-    min-height: 42px;
+    min-height: 44px;
   }
   .header-socials {
     display: none;
@@ -550,6 +563,15 @@
     font-size: 11px;
     padding-inline: 12px;
     gap: 8px;
+  }
+}
+@media (pointer: coarse) {
+  .header-cta {
+    min-height: 44px;
+  }
+  .header-socials a {
+    width: 44px;
+    height: 44px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

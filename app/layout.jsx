@@ -8,6 +8,12 @@ export const metadata = {
     "Designer gráfica e estudante de psicologia, criando identidades visuais com sensibilidade e escuta — entre Recife e qualquer lugar.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">

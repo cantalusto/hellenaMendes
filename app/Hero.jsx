@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { Arrow, Hand } from "./Icons";
 import portrait from "../public/hellena-portrait-v3.webp";
 
 const Orbit = dynamic(() => import("./Orbit"), { ssr: false });
@@ -54,7 +55,7 @@ export default function Hero({ onContact, motionActive = true }) {
         <div className="hero-bottom-content">
           <div className="hero-intro hero-enter">
             <p className="hero-greeting">
-              <span aria-hidden="true">👋</span> Olá, sou Hellena Mendes
+              <Hand /> Olá, sou Hellena Mendes
             </p>
             <h1 id="hero-title">
               BRANDING,
@@ -78,10 +79,10 @@ export default function Hero({ onContact, motionActive = true }) {
                 hdiasmendescruz@gmail.com
               </a>
               <a className="hero-work-link" href="#works">
-                Ver projetos <span aria-hidden="true">↓</span>
+                Ver projetos <Arrow direction="down" />
               </a>
               <button className="hero-mobile-cta" onClick={onContact}>
-                Vamos conversar <span aria-hidden="true">↗</span>
+                Vamos conversar <Arrow />
               </button>
             </div>
             <button
@@ -107,7 +108,7 @@ export default function Hero({ onContact, motionActive = true }) {
                 </text>
               </svg>
               <span className="seal-arrow" aria-hidden="true">
-                ↗
+                <Arrow />
               </span>
             </button>
           </div>
